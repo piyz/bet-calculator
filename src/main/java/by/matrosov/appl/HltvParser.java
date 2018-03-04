@@ -33,61 +33,24 @@ public class HltvParser {
             Elements oddsElements = document1.getElementsByAttributeValueContaining("class", "geoprovider");
             oddsElements.forEach(element -> {
                 try{
-                    if (element.className().contains("_egb")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.05);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.05);
-                    } else if (element.className().contains("_betway")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.042);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.042);
-                    } else if (element.className().contains("_lootbet")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.035);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.035);
-                    }else if (element.className().contains("day geoprovider_ggbet")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.041);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.041);
-                    }else if (element.className().contains("day geoprovider_thunderpick")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1));  //?
-                        secondTeamOdds.add(Double.parseDouble(odds2));
-                    }else if (element.className().contains("_csgopositive")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1)); //?
-                        secondTeamOdds.add(Double.parseDouble(odds2));
-                    }else if (element.className().contains("_bet365")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.04);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.04);
-                    }else if (element.className().contains("_bet188")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.031);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.031    );
-                    }else if (element.className().contains("day geoprovider_1xbet")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.027);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.027);
-                    }else if (element.className().contains("day geoprovider_esporbet")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.031);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.031);
-                    }else if (element.className().contains("day geoprovider_pinnacle")){
-                        String odds1 = element.child(1).text();
-                        String odds2 = element.child(3).text();
-                        firstTeamOdds.add(Double.parseDouble(odds1) - 0.024);
-                        secondTeamOdds.add(Double.parseDouble(odds2) - 0.024);
+                    if (element.className().contains("_egb") ||
+                            element.className().contains("_betway") ||
+                            element.className().contains("_lootbet") ||
+                            element.className().contains("day geoprovider_ggbet") ||
+                            element.className().contains("day geoprovider_thunderpick") ||
+                            element.className().contains("_csgopositive") ||
+                            element.className().contains("_bet365") ||
+                            element.className().contains("_bet188") ||
+                            element.className().contains("day geoprovider_1xbet") ||
+                            element.className().contains("day geoprovider_esporbet") ||
+                            element.className().contains("day geoprovider_pinnacle")){
+                        double odds1 = Double.parseDouble(element.child(1).text());
+                        double odds2 = Double.parseDouble(element.child(3).text());
+                        double margin = (1/odds1 + 1/odds2 - 1) / 2;
+                        double odds1Result = 1/odds1 - margin;
+                        double odds2Result = 1/odds2 - margin;
+                        firstTeamOdds.add(odds1Result);
+                        secondTeamOdds.add(odds2Result);
                     }
                 }catch (Exception ignore){
 
@@ -97,12 +60,10 @@ public class HltvParser {
             double firstSum = 0;
             double secondSum = 0;
             for (Double firstTeamOdd : firstTeamOdds) {
-                //System.out.println(1 / firstTeamOdd);
-                firstSum = firstSum + 1 / firstTeamOdd;
+                firstSum = firstSum + firstTeamOdd;
             }
             for (Double secondTeamOdd : secondTeamOdds) {
-                //System.out.println(1 / secondTeamOdd);
-                secondSum = secondSum + 1 / secondTeamOdd;
+                secondSum = secondSum + secondTeamOdd;
             }
             double firstSumResult = firstSum / firstTeamOdds.size();
             double secondSumResult = secondSum / secondTeamOdds.size();
