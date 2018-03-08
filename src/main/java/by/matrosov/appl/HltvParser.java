@@ -77,7 +77,7 @@ public class HltvParser {
         File file = new File("D:\\file.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         for (Map.Entry entry : result.entrySet()) {
-            writer.write(entry.getKey() + ", " + entry.getValue());
+            writer.write(entry.getKey() + "! " + entry.getValue());
             writer.newLine();
         }
         writer.close();
