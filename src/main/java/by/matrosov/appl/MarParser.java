@@ -59,6 +59,10 @@ public class MarParser {
                 team1 = team1.replaceAll("gaming", " ").trim();
             if (team1.contains("tactics"))
                 team1 = team1.replaceAll("tactics", " ").trim();
+            if (team1.contains("elements pro"))
+                team1 = team1.replaceAll("elements pro", "epg").trim();
+            if (team1.contains("esports"))
+                team1 = team1.replaceAll("esports", " ").trim();
 
             String team2 = teams[1].toLowerCase().trim();
             if (team2.contains("team"))
@@ -67,6 +71,10 @@ public class MarParser {
                 team2 = team2.replaceAll("gaming", " ").trim();
             if (team2.contains("tactics"))
                 team2 = team2.replaceAll("tactics", " ").trim();
+            if (team2.contains("elements pro"))
+                team2 = team2.replaceAll("elements pro", "epg").trim();
+            if (team2.contains("esports"))
+                team2 = team2.replaceAll("esports", " ").trim();
 
 
             for (String str : hltvList) {
