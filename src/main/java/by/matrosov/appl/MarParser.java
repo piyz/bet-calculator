@@ -30,7 +30,6 @@ public class MarParser {
                     try{
                         Element gameElement = element.child(1).child(0).child(0).child(i);
                         String game = gameElement.attr("data-event-name");
-                        //matchesList.add(game);
                         String odds1 = gameElement.child(0).child(2).tagName("span").text();
                         String odds2 = gameElement.child(0).child(3).tagName("span").text();
                         String resultOdds = odds1 + "-" + odds2;
@@ -39,7 +38,7 @@ public class MarParser {
                 }
             }
         });
-        System.out.println(marList);
+        marList.forEach(System.out::println);
 
 
         BufferedReader reader = Files.newBufferedReader(Paths.get("d://file.txt"));
@@ -47,7 +46,7 @@ public class MarParser {
 
         for (String s : marList) {
             String[] arr = s.split(",");
-            String[] teams = arr[0].split("-");
+            String[] teams = arr[0].replaceAll("x-kom", "x kom").split("-");
             String[] marOdds = arr[1].split("-");
             double marOdds1 = Double.parseDouble(marOdds[0].trim());
             double marOdds2 = Double.parseDouble(marOdds[1].trim());
