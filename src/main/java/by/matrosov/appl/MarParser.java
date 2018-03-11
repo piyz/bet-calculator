@@ -87,12 +87,14 @@ public class MarParser {
 
                 if (team1hltv.contains(team1) && team2hltv.contains(team2)){
                     if (marOdds1 > marOdds2){
-                        result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds1)));
+                        result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds1)) +
+                        " (odds " + marOdds1 + ")");
                     }else if (marOdds1 < marOdds2){
-                        result.put(team1 + " vs " + team2, "bet on " + team2 + " " + String.format("%.4f", kelly(marOdds2, hltvOdds2)));
+                        result.put(team1 + " vs " + team2, "bet on " + team2 + " " + String.format("%.4f", kelly(marOdds2, hltvOdds2)) +
+                        " (odds " + marOdds2 + ")");
                     }else if (marOdds1 == marOdds2){
                         result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds1)) +
-                        " or bet on " + team2 + " " + String.format("%.2f", kelly(marOdds2, hltvOdds2)));
+                        " or bet on " + team2 + " " + String.format("%.2f", kelly(marOdds2, hltvOdds2)) + " (odds " + marOdds1 + ")");
                     }
                 }
             }
