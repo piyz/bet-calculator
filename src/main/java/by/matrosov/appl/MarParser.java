@@ -46,7 +46,11 @@ public class MarParser {
 
         for (String s : marList) {
             String[] arr = s.split(",");
-            String[] teams = arr[0].replaceAll("x-kom", "x kom").split("-");
+            String[] teams = arr[0]
+                    .replaceAll("x-kom", "x kom")
+                    .replaceAll("B\\.O\\.O\\.T-dream\\[S\\]cape", "boot ds")
+                    .replaceAll("SapphireKelownaDotCom", "subtle")
+                    .split("-");
             String[] marOdds = arr[1].split("-");
             double marOdds1 = Double.parseDouble(marOdds[0].trim());
             double marOdds2 = Double.parseDouble(marOdds[1].trim());
@@ -95,6 +99,17 @@ public class MarParser {
                     }else if (marOdds1 == marOdds2){
                         result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds1)) +
                         " or bet on " + team2 + " " + String.format("%.2f", kelly(marOdds2, hltvOdds2)) + " (odds " + marOdds1 + ")");
+                    }
+                }else if (team1hltv.contains(team2) && team2hltv.contains(team1)){
+                    if (marOdds1 > marOdds2){
+                        result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds2)) +
+                                " (odds " + marOdds1 + ")");
+                    }else if (marOdds1 < marOdds2){
+                        result.put(team1 + " vs " + team2, "bet on " + team2 + " " + String.format("%.4f", kelly(marOdds2, hltvOdds1)) +
+                                " (odds " + marOdds2 + ")");
+                    }else if (marOdds1 == marOdds2){
+                        result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds2)) +
+                                " or bet on " + team2 + " " + String.format("%.2f", kelly(marOdds2, hltvOdds1)) + " (odds " + marOdds1 + ")");
                     }
                 }
             }
