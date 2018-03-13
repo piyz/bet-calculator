@@ -50,6 +50,7 @@ public class MarParser {
                     .replaceAll("x-kom", "x kom")
                     .replaceAll("B\\.O\\.O\\.T-dream\\[S\\]cape", "boot ds")
                     .replaceAll("SapphireKelownaDotCom", "subtle")
+                    .replaceAll("mousesports\\.CS", "mousesports")
                     .split("-");
             String[] marOdds = arr[1].split("-");
             double marOdds1 = Double.parseDouble(marOdds[0].trim());
@@ -66,6 +67,8 @@ public class MarParser {
                 team1 = team1.replaceAll("elements pro", "epg").trim();
             if (team1.contains("esports"))
                 team1 = team1.replaceAll("esports", " ").trim();
+            if (team1.contains("clan"))
+                team1 = team1.replaceAll("clan", " ").trim();
 
             String team2 = teams[1].toLowerCase().trim();
             if (team2.contains("team"))
@@ -78,6 +81,8 @@ public class MarParser {
                 team2 = team2.replaceAll("elements pro", "epg").trim();
             if (team2.contains("esports"))
                 team2 = team2.replaceAll("esports", " ").trim();
+            if (team2.contains("clan"))
+                team2 = team2.replaceAll("clan", " ").trim();
 
 
             for (String str : hltvList) {
@@ -128,6 +133,4 @@ public class MarParser {
     private static double kelly(double odds, double success){
         return (success * (odds - 1) - (1 - success)) / (odds - 1);
     }
-
-
 }
