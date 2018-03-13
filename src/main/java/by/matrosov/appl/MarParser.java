@@ -51,6 +51,7 @@ public class MarParser {
                     .replaceAll("B\\.O\\.O\\.T-dream\\[S\\]cape", "boot ds")
                     .replaceAll("SapphireKelownaDotCom", "subtle")
                     .replaceAll("mousesports\\.CS", "mousesports")
+                    .replaceAll("Virtus\\.pro", "virtuspro")
                     .split("-");
             String[] marOdds = arr[1].split("-");
             double marOdds1 = Double.parseDouble(marOdds[0].trim());
@@ -126,8 +127,18 @@ public class MarParser {
             writer.write(entry.getKey() + ", " + entry.getValue());
             writer.newLine();
         }
-        writer.close();
+        writer.write("--------------------------------------------");
+        writer.newLine();
 
+        double minOdds = 0.04; //choose your min odds
+        for (Map.Entry entry : result.entrySet()){
+            String[] value = entry.getValue().toString().replaceAll(",", ".").split(" ");
+            if (Double.parseDouble(value[value.length - 3]) >= minOdds){
+                writer.write(entry.getKey() + ", " + entry.getValue());
+                writer.newLine();
+            }
+        }
+        writer.close();
     }
 
     private static double kelly(double odds, double success){
