@@ -46,45 +46,25 @@ public class MarParser {
 
         for (String s : marList) {
             String[] arr = s.split(",");
-            String[] teams = arr[0]
+            String[] teams = arr[0].toLowerCase()
+                    .replaceAll("team", " ")
+                    .replaceAll("gaming", " ")
+                    .replaceAll("tactics", " ")
+                    .replaceAll("elements pro", "epg")
+                    .replaceAll("esports", " ")
+                    .replaceAll("clan", " ")
                     .replaceAll("x-kom", "x kom")
-                    .replaceAll("B\\.O\\.O\\.T-dream\\[S\\]cape", "boot ds")
-                    .replaceAll("SapphireKelownaDotCom", "subtle")
-                    .replaceAll("mousesports\\.CS", "mousesports")
-                    .replaceAll("Virtus\\.pro", "virtuspro")
+                    .replaceAll("b\\.o\\.o\\.t-dream\\[s\\]cape", "boot ds")
+                    .replaceAll("sapphirekelownadotcom", "subtle")
+                    .replaceAll("mousesports\\.cs", "mousesports")
+                    .replaceAll("virtus\\.pro", "virtuspro")
                     .split("-");
             String[] marOdds = arr[1].split("-");
             double marOdds1 = Double.parseDouble(marOdds[0].trim());
             double marOdds2 = Double.parseDouble(marOdds[1].trim());
 
-            String team1 = teams[0].toLowerCase().trim();
-            if (team1.contains("team"))
-                team1 = team1.replaceAll("team", " ").trim();
-            if (team1.contains("gaming"))
-                team1 = team1.replaceAll("gaming", " ").trim();
-            if (team1.contains("tactics"))
-                team1 = team1.replaceAll("tactics", " ").trim();
-            if (team1.contains("elements pro"))
-                team1 = team1.replaceAll("elements pro", "epg").trim();
-            if (team1.contains("esports"))
-                team1 = team1.replaceAll("esports", " ").trim();
-            if (team1.contains("clan"))
-                team1 = team1.replaceAll("clan", " ").trim();
-
-            String team2 = teams[1].toLowerCase().trim();
-            if (team2.contains("team"))
-                team2 = team2.replaceAll("team", " ").trim();
-            if (team2.contains("gaming"))
-                team2 = team2.replaceAll("gaming", " ").trim();
-            if (team2.contains("tactics"))
-                team2 = team2.replaceAll("tactics", " ").trim();
-            if (team2.contains("elements pro"))
-                team2 = team2.replaceAll("elements pro", "epg").trim();
-            if (team2.contains("esports"))
-                team2 = team2.replaceAll("esports", " ").trim();
-            if (team2.contains("clan"))
-                team2 = team2.replaceAll("clan", " ").trim();
-
+            String team1 = teams[0].trim();
+            String team2 = teams[1].trim();
 
             for (String str : hltvList) {
                 String[] hltvArr = str.split("!");
