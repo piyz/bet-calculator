@@ -56,8 +56,10 @@ public class MarParser {
                     .replaceAll("x-kom", "x kom")
                     .replaceAll("b\\.o\\.o\\.t-dream\\[s\\]cape", "boot ds")
                     .replaceAll("sapphirekelownadotcom", "subtle")
-                    .replaceAll("mousesports\\.cs", "mousesports")
+                    .replaceAll("mous \\.cs", "mousesports")
                     .replaceAll("virtus\\.pro", "virtuspro")
+                    .replaceAll("ninjas in pyjamas", "nip")
+                    .replaceAll("addict", " ")
                     .split("-");
             String[] marOdds = arr[1].split("-");
             double marOdds1 = Double.parseDouble(marOdds[0].trim());
