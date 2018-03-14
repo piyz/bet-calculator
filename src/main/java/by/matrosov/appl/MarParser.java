@@ -12,8 +12,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MarParser {
-    public static void main(String[] args) throws IOException {
 
+    private static final double minOdds = 0.03;
+
+    public static void main(String[] args) throws IOException {
         List<String> hltvList = new ArrayList<>();
         List<String> marList = new ArrayList<>();
         Map<String,String> result = new HashMap<>();
@@ -112,7 +114,6 @@ public class MarParser {
         writer.write("--------------------------------------------");
         writer.newLine();
 
-        double minOdds = 0.04; //choose your min odds
         for (Map.Entry entry : result.entrySet()){
             String[] value = entry.getValue().toString().replaceAll(",", ".").split(" ");
             if (Double.parseDouble(value[value.length - 3]) >= minOdds){
