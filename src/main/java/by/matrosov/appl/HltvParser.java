@@ -17,7 +17,7 @@ public class HltvParser {
         List<Double> secondTeamOdds = new ArrayList<>();
         Map<String,String> result = new HashMap<>();
 
-        Document document = Jsoup.connect("https://www.hltv.org").get();
+        Document document = Jsoup.connect("https://www.hltv.org").userAgent("Mozilla/5.0").get();
         Elements matchElements = document.getElementsByAttributeValue("class", "hotmatch-box a-reset");
         matchElements.forEach(element -> {
             String url = element.attr("href");
@@ -43,7 +43,8 @@ public class HltvParser {
                             element.className().contains("_bet188") ||
                             element.className().contains("day geoprovider_1xbet") ||
                             element.className().contains("day geoprovider_esporbet") ||
-                            element.className().contains("day geoprovider_pinnacle")){
+                            element.className().contains("day geoprovider_pinnacle") ||
+                            element.className().contains("day geoprovider_xbet")){
                         double odds1 = Double.parseDouble(element.child(1).text());
                         double odds2 = Double.parseDouble(element.child(3).text());
                         double margin = (1/odds1 + 1/odds2 - 1) / 2;
