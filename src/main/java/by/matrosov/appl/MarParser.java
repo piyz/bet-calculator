@@ -20,7 +20,7 @@ public class MarParser {
         List<String> marList = new ArrayList<>();
         Map<String,String> result = new HashMap<>();
 
-        Document document = Jsoup.connect("https://www.marathonbet.com/su/betting/e-Sports/?menu=1895085").get();
+        Document document = Jsoup.connect("https://www.marathonbet.com/su/betting/e-Sports/?menu=1895085").userAgent("Mozilla/5.0").get();
         Elements matchElements = document.getElementsByAttributeValue("class", "category-container");
 
         matchElements.forEach(element -> {
