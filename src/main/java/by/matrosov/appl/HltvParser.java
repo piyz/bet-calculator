@@ -69,7 +69,9 @@ public class HltvParser {
             double firstSumResult = firstSum / firstTeamOdds.size();
             double secondSumResult = secondSum / secondTeamOdds.size();
 
-            result.put(teamsName, String.format("%.2f", firstSumResult) + " and " + String.format("%.2f", secondSumResult));
+            result.put(teamsName, String.format("%.2f", firstSumResult) + " and "
+                    + String.format("%.2f", secondSumResult) + " and "
+                    + firstTeamOdds.size() + "/" + secondTeamOdds.size());
             firstTeamOdds.clear();
             secondTeamOdds.clear();
         }

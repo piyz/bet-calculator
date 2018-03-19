@@ -19,6 +19,9 @@ public class Parser {
         Map<String,String> egbResult = new HashMap<>();
         Map<String,String> betwayResult = new HashMap<>();
         List<String> hltvList = new ArrayList<>();
+        List<Map<String,String>> bookmakers = new ArrayList<>();
+
+        bookmakers.add(betwayResult);
 
         Document document = Jsoup.connect("https://www.hltv.org").userAgent("Mozilla/5.0").get();
         Elements matchElements = document.getElementsByAttributeValue("class", "hotmatch-box a-reset");
@@ -64,5 +67,16 @@ public class Parser {
             writer.newLine();
         }
         writer.close();
+
+        for (Map.Entry entry : egbResult.entrySet()) {
+            String teams = entry.getKey().toString();
+            for (int i = 0; i < bookmakers.size(); i++) {
+                for (Map.Entry e : egbResult.entrySet()){
+                    if (e.getKey().equals(teams)){
+
+                    }
+                }
+            }
+        }
     }
 }
