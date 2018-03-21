@@ -99,9 +99,10 @@ public class HltvParser {
                 minOdds = odds1;
             }
 
+            int checkFlag = 0;
             for (String s : oldFile) {
                 if (s.contains(teams)){
-
+                    checkFlag = 1;
                     double oldodds1 = Double.parseDouble(String.valueOf(s.split("!")[1].split("and")[0].replaceAll(",", ".").trim()));
                     double oldodds2 = Double.parseDouble(String.valueOf(s.split("!")[1].split("and")[1].replaceAll(",", ".").trim()));
                     int oldTrustFactor = Integer.parseInt(String.valueOf(s.split("!")[1].split("and")[2].trim().charAt(0)));
@@ -126,6 +127,7 @@ public class HltvParser {
                     }
                 }
             }
+            if (checkFlag == 0) finalResult.put(entry.getKey().toString(), entry.getValue().toString());
         }
 
         File file = new File("D:\\file.txt");

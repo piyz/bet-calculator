@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class MarParser {
 
-    private static final double minOdds = 0.03;
+    private static final double minOdds = 0.02;
 
     public static void main(String[] args) throws IOException {
         List<String> hltvList = new ArrayList<>();
@@ -77,13 +77,14 @@ public class MarParser {
                 String[] hltvOdds = hltvArr[1].split("and");
                 double hltvOdds1 = Double.parseDouble(hltvOdds[0].replaceAll(",", ".").trim());
                 double hltvOdds2 = Double.parseDouble(hltvOdds[1].replaceAll(",", ".").trim());
+                String trstFactr = hltvOdds[2].trim();
                 String team1hltv = hltvTeams[0].replaceAll("-", " ").toLowerCase();
                 String team2hltv = hltvTeams[1].replaceAll("-", " ").toLowerCase();
 
                 if (team1hltv.contains(team1) && team2hltv.contains(team2)){
-                    calculateBet(result, marOdds1, marOdds2, team1, team2, hltvOdds1, hltvOdds2);
+                    calculateBet(result, marOdds1, marOdds2, team1, team2, hltvOdds1, hltvOdds2, trstFactr);
                 }else if (team1hltv.contains(team2) && team2hltv.contains(team1)){
-                    calculateBet(result, marOdds1, marOdds2, team1, team2, hltvOdds2, hltvOdds1);
+                    calculateBet(result, marOdds1, marOdds2, team1, team2, hltvOdds2, hltvOdds1, trstFactr);
                 }
             }
         }
@@ -99,7 +100,7 @@ public class MarParser {
 
         for (Map.Entry entry : result.entrySet()){
             String[] value = entry.getValue().toString().replaceAll(",", ".").split(" ");
-            if (Double.parseDouble(value[value.length - 3]) >= minOdds){
+            if (Double.parseDouble(value[value.length - 4]) >= minOdds){
                 writer.write(entry.getKey() + ", " + entry.getValue());
                 writer.newLine();
             }
@@ -107,16 +108,16 @@ public class MarParser {
         writer.close();
     }
 
-    private static void calculateBet(Map<String, String> result, double marOdds1, double marOdds2, String team1, String team2, double hltvOdds1, double hltvOdds2) {
+    private static void calculateBet(Map<String, String> result, double marOdds1, double marOdds2, String team1, String team2, double hltvOdds1, double hltvOdds2, String trstFactr) {
         if (marOdds1 > marOdds2){
             result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds1)) +
-            " (odds " + marOdds1 + ")");
+            " (odds " + marOdds1 + ")" + "-> " + trstFactr);
         }else if (marOdds1 < marOdds2){
             result.put(team1 + " vs " + team2, "bet on " + team2 + " " + String.format("%.4f", kelly(marOdds2, hltvOdds2)) +
-            " (odds " + marOdds2 + ")");
+            " (odds " + marOdds2 + ")" + "-> " + trstFactr);
         }else if (marOdds1 == marOdds2){
             result.put(team1 + " vs " + team2, "bet on " + team1 + " " + String.format("%.4f", kelly(marOdds1, hltvOdds1)) +
-            " or bet on " + team2 + " " + String.format("%.2f", kelly(marOdds2, hltvOdds2)) + " (odds " + marOdds1 + ")");
+            " or bet on " + team2 + " " + String.format("%.2f", kelly(marOdds2, hltvOdds2)) + " (odds " + marOdds1 + ")" + "-> " + trstFactr);
         }
     }
 
