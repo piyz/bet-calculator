@@ -4,11 +4,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HltvParser {
     public static void main(String[] args) throws IOException {
@@ -76,10 +76,61 @@ public class HltvParser {
             secondTeamOdds.clear();
         }
 
+        //----------------------------------------------------------------------------hm?
+        BufferedReader reader = Files.newBufferedReader(Paths.get("d://file.txt"));
+        List<String> oldFile = reader.lines().collect(Collectors.toList());
+        Map<String, String> finalResult = new HashMap<>();
+        //need to compare oldFile with result(map)
+        //and write to a newFile
+        for (Map.Entry entry : result.entrySet()){
+
+            String teams = entry.getKey().toString();
+            String[] oddsAndTrustFactor = entry.getValue().toString().split("and");
+            String trustFactor = oddsAndTrustFactor[2].trim();
+            double odds1 = Double.parseDouble(entry.getValue().toString().split("and")[0].replaceAll(",", ".").trim());
+            double odds2 = Double.parseDouble(entry.getValue().toString().split("and")[1].replaceAll(",", ".").trim());
+
+            double minOdds;
+            if (odds1 > odds2){
+                minOdds = odds2;
+            }else if (odds1 < odds2){
+                minOdds = odds1;
+            }else {
+                minOdds = odds1;
+            }
+
+            for (String s : oldFile) {
+                if (s.contains(teams)){
+
+                    double oldodds1 = Double.parseDouble(String.valueOf(s.split("!")[1].split("and")[0].replaceAll(",", ".").trim()));
+                    double oldodds2 = Double.parseDouble(String.valueOf(s.split("!")[1].split("and")[1].replaceAll(",", ".").trim()));
+                    int oldTrustFactor = Integer.parseInt(String.valueOf(s.split("!")[1].split("and")[2].trim().charAt(0)));
+                    double oldMinOdds;
+                    if (oldodds1 > oldodds2){
+                        oldMinOdds = oldodds2;
+                    }else if (oldodds1 < oldodds2){
+                        oldMinOdds = oldodds1;
+                    }else {
+                        oldMinOdds = oldodds1;
+                    }
+
+                    if (Integer.parseInt(String.valueOf(trustFactor.charAt(0))) > oldTrustFactor){
+                        finalResult.put(entry.getKey().toString(), entry.getValue().toString());
+                    }else {
+                        //check odds
+                        if (oldMinOdds < minOdds){
+                            finalResult.put(entry.getKey().toString(), entry.getValue().toString());
+                        }else {
+                            finalResult.put(s.split("!")[0].trim(), s.split("!")[1].trim());
+                        }
+                    }
+                }
+            }
+        }
 
         File file = new File("D:\\file.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        for (Map.Entry entry : result.entrySet()) {
+        for (Map.Entry entry : finalResult.entrySet()) {
             writer.write(entry.getKey() + "! " + entry.getValue());
             writer.newLine();
         }
