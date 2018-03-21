@@ -133,8 +133,10 @@ public class HltvParser {
         File file = new File("D:\\file.txt");
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         for (Map.Entry entry : finalResult.entrySet()) {
-            writer.write(entry.getKey() + "! " + entry.getValue());
-            writer.newLine();
+            if (entry.getKey().toString().contains("-vs-")){
+                writer.write(entry.getKey() + "! " + entry.getValue());
+                writer.newLine();
+            }
         }
         writer.close();
     }

@@ -1,4 +1,4 @@
-package by.matrosov.appl;
+package by.matrosov.test;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
