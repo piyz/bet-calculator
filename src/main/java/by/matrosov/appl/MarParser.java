@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class MarParser {
 
-    private static final double minOdds = 0.02;
+    private static final double minOdds = 0.01;
 
     public static void main(String[] args) throws IOException {
         List<String> hltvList = new ArrayList<>();
