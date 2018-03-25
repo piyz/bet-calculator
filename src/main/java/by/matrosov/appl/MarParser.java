@@ -49,6 +49,7 @@ public class MarParser {
         for (String s : marList) {
             String[] arr = s.split(",");
             String[] teams = arr[0].toLowerCase()
+                    .replaceAll("'", "")
                     .replaceAll("team", " ")
                     .replaceAll("gaming", " ")
                     .replaceAll("tactics", " ")
