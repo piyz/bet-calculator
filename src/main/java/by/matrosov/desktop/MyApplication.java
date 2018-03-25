@@ -7,12 +7,16 @@ import java.awt.*;
 public class MyApplication{
 
     private JFrame frame;
-    private JPanel panel;
+
+    //--------------------------
+    private JPanel checkboxPanel;
+    private JPanel buttonPanel;
 
     //-----------------------
     private JButton marButton;
     private JButton egbButton;
-    //-----------------------
+    private JButton thirdButton;
+    private JButton fourthButton;
 
     //----------------------
     private JCheckBox egb;
@@ -26,7 +30,6 @@ public class MyApplication{
     private JCheckBox esporbet;
     private JCheckBox pinnacle;
     private JCheckBox xbet;
-    //-----------------------
 
     public MyApplication() {
         initGUI();
@@ -36,14 +39,20 @@ public class MyApplication{
         frame = new JFrame("TITLE HERE");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        panel = new JPanel(new GridLayout(4, 2));
+        checkboxPanel = new JPanel(new GridLayout(4, 2));
         Border border = BorderFactory.createTitledBorder("Choose calculated odds");
-        panel.setBorder(border);
+        checkboxPanel.setBorder(border);
 
         marButton = new JButton("Calculate mar bets");
         egbButton = new JButton("Calculate egb bets");
-        //panel.add(marButton, BorderLayout.PAGE_END);
-        //panel.add(egbButton, BorderLayout.AFTER_LINE_ENDS);
+        thirdButton = new JButton("Third button");
+        fourthButton = new JButton("Fourth button");
+
+        buttonPanel = new JPanel(new GridLayout(4,2));
+        buttonPanel.add(marButton);
+        buttonPanel.add(egbButton);
+        buttonPanel.add(thirdButton);
+        buttonPanel.add(fourthButton);
 
 
         //----------cho cho cho-----------------------------
@@ -80,24 +89,23 @@ public class MyApplication{
         xbet = new JCheckBox("xbet");
         xbet.setSelected(true);
 
-        panel.add(egb);
-        panel.add(lootbet);
-        panel.add(ggbet);
-        panel.add(thunderpick);
-        panel.add(csgopositive);
-        panel.add(bet365);
-        panel.add(bet188);
-        panel.add(onexbet);
-        panel.add(esporbet);
-        panel.add(pinnacle);
-        panel.add(xbet);
+        checkboxPanel.add(egb);
+        checkboxPanel.add(lootbet);
+        checkboxPanel.add(ggbet);
+        checkboxPanel.add(thunderpick);
+        checkboxPanel.add(csgopositive);
+        checkboxPanel.add(bet365);
+        checkboxPanel.add(bet188);
+        checkboxPanel.add(onexbet);
+        checkboxPanel.add(esporbet);
+        checkboxPanel.add(pinnacle);
+        checkboxPanel.add(xbet);
         //-----------------------------------------------
 
         Container container = frame.getContentPane();
-        container.add(panel, BorderLayout.NORTH);
+        container.add(checkboxPanel, BorderLayout.NORTH);
+        container.add(buttonPanel);
 
-        container.add(marButton);
-        container.add(egbButton);
 
         frame.setSize(300, 480);
         frame.setVisible(true);
