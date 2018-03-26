@@ -16,9 +16,10 @@ public class MarParser {
     private static final double minOdds = 0.01;
 
     public static void main(String[] args) throws IOException {
-        List<String> hltvList = new ArrayList<>();
+        List<String> hltvList;
         List<String> marList = new ArrayList<>();
         Map<String,String> result = new HashMap<>();
+        //DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
         Document document = Jsoup.connect("https://www.marathonbet.com/su/betting/e-Sports/?menu=1895085").userAgent("Mozilla/5.0").get();
         Elements matchElements = document.getElementsByAttributeValue("class", "category-container");
@@ -41,7 +42,6 @@ public class MarParser {
             }
         });
         marList.forEach(System.out::println);
-
 
         BufferedReader reader = Files.newBufferedReader(Paths.get("d://file.txt"));
         hltvList = reader.lines().collect(Collectors.toList());
@@ -107,6 +107,27 @@ public class MarParser {
             }
         }
         writer.close();
+
+        /*
+            int gameCount = 0;
+            for (Map.Entry entry : result.entrySet()){
+                String[] value = entry.getValue().toString().replaceAll(",", ".").split(" ");
+                if (Double.parseDouble(value[value.length - 4]) > 0){
+                    gameCount++;
+                }
+            }
+
+            Date date = new Date();
+            if (gameCount == 0){
+                System.out.println(dateFormat.format(date) + " : NULL");
+            }else {
+                System.out.println(dateFormat.format(date) + ": " + gameCount + " MATCHES FOUND");
+            }
+            hltvList.clear();
+            marList.clear();
+            result.clear();
+            TimeUnit.MINUTES.sleep(10);
+         */
     }
 
     private static void calculateBet(Map<String, String> result, double marOdds1, double marOdds2, String team1, String team2, double hltvOdds1, double hltvOdds2, String trstFactr) {
