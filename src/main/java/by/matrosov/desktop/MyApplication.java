@@ -1,8 +1,18 @@
 package by.matrosov.desktop;
 
+import by.matrosov.appl.HltvParser;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MyApplication{
 
@@ -17,6 +27,8 @@ public class MyApplication{
     private JButton egbButton;
     private JButton thirdButton;
     private JButton fourthButton;
+    private JButton fifthButton;
+    private JButton sixthButton;
 
     //----------------------
     private JCheckBox egb;
@@ -44,15 +56,26 @@ public class MyApplication{
         checkboxPanel.setBorder(border);
 
         marButton = new JButton("Calculate mar bets");
+
         egbButton = new JButton("Calculate egb bets");
+
         thirdButton = new JButton("Third button");
+        thirdButton.addActionListener(e -> Toolkit.getDefaultToolkit().beep());
         fourthButton = new JButton("Fourth button");
+        fourthButton.addActionListener(e -> Toolkit.getDefaultToolkit().beep());
+        fifthButton = new JButton("Fifth button");
+        fifthButton.addActionListener(e -> Toolkit.getDefaultToolkit().beep());
+        sixthButton = new JButton("Sixth button");
+        sixthButton.addActionListener(e -> Toolkit.getDefaultToolkit().beep());
+
 
         buttonPanel = new JPanel(new GridLayout(4,2));
         buttonPanel.add(marButton);
         buttonPanel.add(egbButton);
         buttonPanel.add(thirdButton);
         buttonPanel.add(fourthButton);
+        buttonPanel.add(fifthButton);
+        buttonPanel.add(sixthButton);
 
 
         //----------cho cho cho-----------------------------
@@ -107,7 +130,9 @@ public class MyApplication{
         container.add(buttonPanel);
 
 
-        frame.setSize(300, 480);
+        frame.setSize(380, 270);
+        //frame.setMaximumSize(new Dimension(300, 480));
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
