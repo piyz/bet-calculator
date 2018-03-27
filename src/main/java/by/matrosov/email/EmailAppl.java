@@ -5,6 +5,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -256,6 +259,7 @@ public class EmailAppl {
                     System.out.println(dateFormat.format(date) + " : NOT FOUND");
                 }else {
                     //TODO email
+                    sendEmail("*", "*", "*", dateFormat.format(date), String.valueOf(gameCount));
                     System.out.println(dateFormat.format(date) + ": " + gameCount + " MATCHES FOUND");
                 }
 
@@ -267,7 +271,7 @@ public class EmailAppl {
                 hltvResult.clear();
 
                 //sleep
-                TimeUnit.MINUTES.sleep(3);
+                TimeUnit.MINUTES.sleep(30);
 
 
             }catch (Exception e){
@@ -291,5 +295,34 @@ public class EmailAppl {
 
     private static double kelly(double odds, double success){
         return (success * (odds - 1) - (1 - success)) / (odds - 1);
+    }
+
+    private static void sendEmail(String from, String pass, String where, String subject, String msg){
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.port", "465");
+
+        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(from, pass);
+                    }
+                });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(where));
+            message.setSubject(subject);
+            message.setText(msg);
+
+            Transport.send(message);
+            //System.out.println("DONE");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 }
