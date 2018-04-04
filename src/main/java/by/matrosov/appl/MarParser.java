@@ -35,6 +35,9 @@ public class MarParser {
                         String game = gameElement.attr("data-event-name");
                         String odds1 = gameElement.child(0).child(2).tagName("span").text();
                         String odds2 = gameElement.child(0).child(3).tagName("span").text();
+
+                        //TODO: find games with 3 outcomes
+
                         String resultOdds = odds1 + "-" + odds2;
                         marList.add(game + "," + resultOdds);
                     }catch (Exception ignore){}
