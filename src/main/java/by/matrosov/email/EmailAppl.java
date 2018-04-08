@@ -150,6 +150,7 @@ public class EmailAppl {
                             .replaceAll("addict", " ")
                             .replaceAll("nao tem como", "no tem como")
                             .replaceAll("valiance & co", "valiance")
+                            .replaceAll("yeah!", "yeah")
                             .split("-");
                     String[] marOdds = arr[1].split("-");
                     double marOdds1 = Double.parseDouble(marOdds[0].trim());
@@ -203,7 +204,7 @@ public class EmailAppl {
                     System.out.println(dateFormat.format(date) + " : NOT FOUND");
                 }else {
                     sendEmail("@gmail.com", "", "@gmail.com", dateFormat.format(date), listEmail.toString());
-                    System.out.println(dateFormat.format(date) + ": " + gameCount + " MATCHES FOUND" + " email sent");
+                    System.out.println(dateFormat.format(date) + ": " + gameCount + " MATCH(ES)" + " email was send");
                 }
                 hltvList.clear();
                 marList.clear();
